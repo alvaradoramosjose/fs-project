@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="device-width, initial-scale=1.0">
+<title>Task Manager</title>
+<style>
+  /* Estilo general de toda la página */
+  body {
+    font-family: Arial, sans-serif;
+    padding: 30px;
+    background-color: #f4f4f4;
+  }
+
+  /* Estilo del título principal */
+  h1 {
+    color: #333;
+    margin-bottom: 20px;
+  }
+
+  /* Estilo del campo donde se escribe la tarea */
+  input {
+    padding: 10px;
+    width: 250px;
+    font-size: 16px;
+  }
+
+  /* Estilo de los botones */
+  button {
+    padding: 10px 15px;
+    font-size: 16px;
+    cursor: pointer;
+  }
+
+  /* Estilo general de la lista de tareas */
+  ul {
+    padding: 0;
+    margin-top: 20px;
+  }
+
+  /* Estilo de cada tarea de la lista */
+  li {
+    list-style: none;
+    background-color: white;
+    padding: 10px;
+    margin-bottom: 8px;
+  }
+</style>
+</head>
+
+<body>
+    <h1>Task Manager</h1>
+    <input
+        id="taskInput"
+        type="text"
+        placeholder="Escriba una tarea"
+    />
+    <button id="addTaskBtn">Agregar Tarea</button>
+    <ul id="taskList">
+        <li>Estudiar Javascript</li>
+    </ul>
+    
+    <script>
+      /* Stores a reference to the text input */
+      const taskInput = document.getElementById("taskInput");
+      
+      /* Stores a reference to the Add Task button */
+      const addTaskBtn = document.getElementById("addTaskBtn");
+      
+      /* Stores a reference to the task list */
+      const taskList = document.getElementById("taskList");
+
+      /* Function that creates and adds a new task */
+      const addTask = () => {
+        /* Gets the text entered by the user.
+           trim() removes unnecessary spaces */
+        const taskText = taskInput.value.trim();
+
+        /* Prevents the user from adding an empty task */
+        if (taskText === "") {
+          return;
+        }
+
+        /* Creates a new <li> element */
+        const li = document.createElement("li");
+
+        /* Creates a <span> to contain the task text */
+        const taskSpan = document.createElement("span");
+        /* Places the user's text inside the span */
+        taskSpan.textContent = taskText;
+
+        /* Creates the Delete button */
+        const deleteButton = document.createElement("button");
+        /* Sets the text displayed on the button */
+        deleteButton.textContent = "Eliminar";
+        /* Adds a CSS class to the Delete button */
+        deleteButton.classList.add("delete-btn");
+
+        /* Listens for a click on the Delete button */
+        deleteButton.addEventListener("click", () => {
+          /* Removes the complete task from the list */
+          li.remove();
+        });
+
+        /* Adds the task text to the <li> */
+        li.appendChild(taskSpan);
+        /* Adds the Delete button to the <li> */
+        li.appendChild(deleteButton);
+        /* Adds the completed task to the task list */
+        taskList.appendChild(li);
+
+        /* Clears the text input */
+        taskInput.value = "";
+        /* Returns the cursor to the text input */
+        taskInput.focus();
+      };
+
+      /* Runs addTask when the user clicks the Add Task button */
+      addTaskBtn.addEventListener("click", addTask);
+
+      /* Allows the user to add a task by pressing Enter */
+      taskInput.addEventListener("keydown", (event) => {
+        /* Checks whether the pressed key was Enter */
+        if (event.key === "Enter") {
+          addTask();
+        }
+      });
+    </script>
+</body>
+</html>
